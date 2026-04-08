@@ -1,94 +1,659 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Marathon → 50-Mile Ultra Training Plan</title>
-<meta name="description" content="39-week training plan: sub-4 marathon into a 50-mile ultra." />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Training Plan" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #0f172a; }
-  ::-webkit-scrollbar { height: 4px; }
-  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-</style>
-</head>
-<body>
-<div id="root"></div>
-<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
-<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
-<script>
-var e=React.createElement,useState=React.useState,useMemo=React.useMemo;
-var PHASES={Base:{color:"#3B82F6",accent:"#60A5FA",label:"Base Building"},Marathon:{color:"#F59E0B",accent:"#FBBF24",label:"Marathon Block"},Recovery:{color:"#10B981",accent:"#34D399",label:"Recovery"},Ultra:{color:"#EF4444",accent:"#F87171",label:"Ultra Build"}};
-var LIFT_DETAILS={A:{name:"Upper Push/Pull",exercises:[{name:"Pull-Ups",sets:"3\u00d76-10",weight:"BW"},{name:"DB Bench Press",sets:"3\u00d78-10",weight:"40-50 lb"},{name:"DB Bent-Over Row",sets:"3\u00d710-12",weight:"40-50 lb"},{name:"DB OH Press",sets:"3\u00d78-10",weight:"25-40 lb"},{name:"DB Hammer Curls",sets:"2\u00d712",weight:"25 lb"},{name:"Dead Hang",sets:"2\u00d730-45s",weight:"BW"}]},B:{name:"Lower / Posterior",exercises:[{name:"DB Goblet Squat",sets:"3\u00d710-12",weight:"40-50 lb"},{name:"DB Romanian DL",sets:"3\u00d710-12",weight:"40-50 lb"},{name:"DB Walking Lunges",sets:"3\u00d710/leg",weight:"25-40 lb"},{name:"DB Step-Ups",sets:"3\u00d710/leg",weight:"25-40 lb"},{name:"SL Calf Raises",sets:"3\u00d715/leg",weight:"BW/25 lb"},{name:"Ab Roller",sets:"3\u00d78-12",weight:"BW"}]},C:{name:"Core & Stability",exercises:[{name:"Ab Roller",sets:"3\u00d710-15",weight:"BW"},{name:"Pull-Ups (wide)",sets:"2\u00d7max",weight:"BW"},{name:"DB Farmer Carry",sets:"3\u00d740 yd",weight:"50 lb ea"},{name:"Front Plank",sets:"3\u00d745-60s",weight:"BW"},{name:"Side Plank",sets:"2\u00d730-40s/side",weight:"BW"},{name:"DB SL Romanian DL",sets:"2\u00d710/leg",weight:"25 lb"},{name:"Hanging Knee Raises",sets:"3\u00d710-15",weight:"BW"}]}};
-var weeks=[
-{wk:1,phase:"Base",of:"Apr 6",days:[{d:"Mon",run:"4 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"4 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"3 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"8 mi Long",pace:"10:00\u201312:00",hr:"140\u2013155",lift:null,type:"long"}],miles:24},
-{wk:2,phase:"Base",of:"Apr 13",days:[{d:"Mon",run:"4 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"4 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"3 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"9 mi Long",pace:"10:00\u201312:00",hr:"140\u2013155",lift:null,type:"long"}],miles:26},
-{wk:3,phase:"Base",of:"Apr 20",days:[{d:"Mon",run:"5 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"4 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"3 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"10 mi Long",pace:"10:00\u201312:00",hr:"140\u2013155",lift:null,type:"long"}],miles:28},
-{wk:4,phase:"Base",of:"Apr 27",days:[{d:"Mon",run:"4 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"3 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"3 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"8 mi Long",pace:"10:00\u201312:00",hr:"140\u2013155",lift:null,type:"long"}],miles:23},
-{wk:5,phase:"Base",of:"May 4",days:[{d:"Mon",run:"5 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"7 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"5 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"4 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"11 mi Long",pace:"10:00\u201312:00",hr:"140\u2013155",lift:null,type:"long"}],miles:32},
-{wk:6,phase:"Base",of:"May 11",days:[{d:"Mon",run:"5 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"7 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"5 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"4 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"12 mi Long",pace:"10:00\u201312:00",hr:"140\u2013155",lift:null,type:"long"}],miles:33},
-{wk:7,phase:"Base",of:"May 18",days:[{d:"Mon",run:"6 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"8 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"5 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"4 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"13 mi Long",pace:"10:00\u201312:00",hr:"140\u2013155",lift:null,type:"long"}],miles:36},
-{wk:8,phase:"Base",of:"May 25",days:[{d:"Mon",run:"5 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"4 mi Easy",pace:"10:00\u201311:30",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"3 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"10 mi Long",pace:"10:00\u201312:00",hr:"140\u2013155",lift:null,type:"long"}],miles:28},
-{wk:9,phase:"Marathon",of:"Jun 1",days:[{d:"Mon",run:"6 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"8 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013150",lift:null,type:"easy"},{d:"Thu",run:"5 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"4 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"14 mi Long",pace:"10:00\u201311:30",hr:"140\u2013155",lift:null,type:"long"}],miles:37},
-{wk:10,phase:"Marathon",of:"Jun 8",days:[{d:"Mon",run:"6 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"8 mi w/ 3 Tempo",pace:"Tempo: 8:30\u20139:15",hr:"160\u2013170",lift:null,type:"tempo"},{d:"Thu",run:"5 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"4 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"15 mi Long",pace:"10:00\u201311:30",hr:"140\u2013155",lift:null,type:"long"}],miles:38},
-{wk:11,phase:"Marathon",of:"Jun 15",days:[{d:"Mon",run:"6 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"9 mi w/ 4 Tempo",pace:"Tempo: 8:30\u20139:15",hr:"160\u2013170",lift:null,type:"tempo"},{d:"Thu",run:"5 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"5 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"16 mi Long",pace:"10:00\u201311:30",hr:"140\u2013155",lift:null,type:"long"}],miles:41},
-{wk:12,phase:"Marathon",of:"Jun 22",days:[{d:"Mon",run:"5 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"4 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"3 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"12 mi Long",pace:"10:00\u201311:30",hr:"140\u2013155",lift:null,type:"long"}],miles:30},
-{wk:13,phase:"Marathon",of:"Jun 29",days:[{d:"Mon",run:"6 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"9 mi w/ 4 Tempo",pace:"Tempo: 8:30\u20139:15",hr:"160\u2013170",lift:null,type:"tempo"},{d:"Thu",run:"6 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"5 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"17 mi Long",pace:"10:00\u201311:30",hr:"140\u2013155",lift:null,type:"long"}],miles:43},
-{wk:14,phase:"Marathon",of:"Jul 6",days:[{d:"Mon",run:"6 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"10 mi w/ 5 Tempo",pace:"Tempo: 8:30\u20139:15",hr:"160\u2013170",lift:null,type:"tempo"},{d:"Thu",run:"6 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"5 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"18 mi Long w/ 4 MGP",pace:"MGP: 9:00\u20139:05",hr:"155\u2013165",lift:null,type:"long"}],miles:45},
-{wk:15,phase:"Marathon",of:"Jul 13",days:[{d:"Mon",run:"7 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"10 mi w/ 5 Tempo",pace:"Tempo: 8:30\u20139:15",hr:"160\u2013170",lift:null,type:"tempo"},{d:"Thu",run:"6 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"5 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"16 mi Long",pace:"10:00\u201311:30",hr:"140\u2013155",lift:null,type:"long"}],miles:44},
-{wk:16,phase:"Marathon",of:"Jul 20",days:[{d:"Mon",run:"5 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"7 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"4 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"4 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"13 mi Long",pace:"10:00\u201311:30",hr:"140\u2013155",lift:null,type:"long"}],miles:33},
-{wk:17,phase:"Marathon",of:"Jul 27",days:[{d:"Mon",run:"7 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"10 mi Progression",pace:"Start easy \u2192 9:00",hr:"145\u2013165",lift:null,type:"tempo"},{d:"Thu",run:"6 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"5 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"20 mi Long w/ 6 MGP",pace:"MGP: 9:00\u20139:05",hr:"155\u2013165",lift:null,type:"long"}],miles:48},
-{wk:18,phase:"Marathon",of:"Aug 3",days:[{d:"Mon",run:"7 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"10 mi w/ 5 Tempo",pace:"Tempo: 8:30\u20139:15",hr:"160\u2013170",lift:null,type:"tempo"},{d:"Thu",run:"6 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"5 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"18 mi Long w/ 8 MGP",pace:"MGP: 9:00\u20139:05",hr:"155\u2013165",lift:null,type:"long"}],miles:46},
-{wk:19,phase:"Marathon",of:"Aug 10",days:[{d:"Mon",run:"6 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"8 mi w/ 4 Tempo",pace:"Tempo: 8:30\u20139:00",hr:"160\u2013170",lift:null,type:"tempo"},{d:"Thu",run:"5 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"5 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"20 mi Long w/ 10 MGP",pace:"MGP: 9:00\u20139:05",hr:"155\u2013165",lift:null,type:"long"}],miles:44},
-{wk:20,phase:"Marathon",of:"Aug 17",days:[{d:"Mon",run:"5 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"4 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"4 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"12 mi Long",pace:"10:00\u201311:00",hr:"140\u2013155",lift:null,type:"long"}],miles:31},
-{wk:21,phase:"Marathon",of:"Aug 24",days:[{d:"Mon",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"7 mi w/ 3 Tempo",pace:"Tempo: 8:30\u20139:00",hr:"160\u2013170",lift:null,type:"tempo"},{d:"Thu",run:"4 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"3 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:null,type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"10 mi w/ 4 MGP",pace:"MGP: 9:00\u20139:05",hr:"155\u2013165",lift:null,type:"long"}],miles:29},
-{wk:22,phase:"Marathon",of:"Aug 31",days:[{d:"Mon",run:"4 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"5 mi w/ 2 MGP",pace:"MGP: 9:00\u20139:05",hr:"155\u2013165",lift:null,type:"tempo"},{d:"Thu",run:"3 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Fri",run:null,lift:null,type:"rest"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"MARATHON RACE DAY",pace:"9:05/mi goal",hr:"Race effort",lift:null,type:"race"}],miles:"26.2 + 12"},
-{wk:23,phase:"Recovery",of:"Sep 7",days:[{d:"Mon",run:null,lift:null,type:"rest"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"3 mi Easy",pace:"Whatever feels good",hr:"< 145",lift:null,type:"recovery"},{d:"Thu",run:null,lift:"B",type:"rest"},{d:"Fri",run:"3 mi Easy",pace:"Whatever feels good",hr:"< 145",lift:null,type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:null,lift:null,type:"rest"}],miles:6},
-{wk:24,phase:"Recovery",of:"Sep 14",days:[{d:"Mon",run:"3 mi Easy",pace:"10:30\u201311:30",hr:"130\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"4 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"3 mi Easy",pace:"10:30\u201311:30",hr:"130\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"3 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"5 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013150",lift:null,type:"long"}],miles:18},
-{wk:25,phase:"Recovery",of:"Sep 21",days:[{d:"Mon",run:"4 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"4 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"3 mi Recovery",pace:"10:30\u201311:30",hr:"130\u2013140",lift:"C",type:"recovery"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"7 mi Easy",pace:"10:00\u201311:00",hr:"135\u2013150",lift:null,type:"long"}],miles:23},
-{wk:26,phase:"Ultra",of:"Sep 28",days:[{d:"Mon",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"7 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"5 mi Easy",pace:"10:30\u201311:30",hr:"130\u2013145",lift:"C",type:"easy"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"12 mi Long (trails)",pace:"10:30\u201312:00",hr:"140\u2013155",lift:null,type:"long"}],miles:34},
-{wk:27,phase:"Ultra",of:"Oct 5",days:[{d:"Mon",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"8 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"6 mi Easy",pace:"10:30\u201311:30",hr:"130\u2013145",lift:"C",type:"easy"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"14 mi Long (trails)",pace:"10:30\u201312:00",hr:"140\u2013155",lift:null,type:"long"}],miles:38},
-{wk:28,phase:"Ultra",of:"Oct 12",days:[{d:"Mon",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"8 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"7 mi B2B",pace:"10:30\u201311:30",hr:"135\u2013150",lift:"C",type:"b2b"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"16 mi Long (trails)",pace:"10:30\u201312:00",hr:"140\u2013155",lift:null,type:"long"}],miles:42},
-{wk:29,phase:"Ultra",of:"Oct 19",days:[{d:"Mon",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"4 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"4 mi Easy",pace:"10:30\u201311:30",hr:"130\u2013145",lift:"C",type:"easy"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"12 mi Long",pace:"10:00\u201311:30",hr:"140\u2013155",lift:null,type:"long"}],miles:31},
-{wk:30,phase:"Ultra",of:"Oct 26",days:[{d:"Mon",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"9 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"8 mi B2B",pace:"10:30\u201311:30",hr:"135\u2013150",lift:"C",type:"b2b"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"18 mi Long (trails)",pace:"10:30\u201312:00",hr:"140\u2013155",lift:null,type:"long"}],miles:47},
-{wk:31,phase:"Ultra",of:"Nov 2",days:[{d:"Mon",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"9 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"10 mi B2B",pace:"10:30\u201312:00",hr:"135\u2013150",lift:"C",type:"b2b"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"20 mi Long (trails)",pace:"10:30\u201312:00",hr:"140\u2013155",lift:null,type:"long"}],miles:51},
-{wk:32,phase:"Ultra",of:"Nov 9",days:[{d:"Mon",run:"7 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"10 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Fri",run:"10 mi B2B",pace:"10:30\u201312:00",hr:"135\u2013150",lift:"C",type:"b2b"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"22 mi Long (trails)",pace:"10:30\u201312:00",hr:"140\u2013155",lift:null,type:"long"}],miles:55},
-{wk:33,phase:"Ultra",of:"Nov 16",days:[{d:"Mon",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"7 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"4 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"5 mi Easy",pace:"10:30\u201311:30",hr:"130\u2013145",lift:"C",type:"easy"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"14 mi Long",pace:"10:00\u201311:30",hr:"140\u2013155",lift:null,type:"long"}],miles:35},
-{wk:34,phase:"Ultra",of:"Nov 23",days:[{d:"Mon",run:"7 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"10 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"7 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Fri",run:"10 mi B2B",pace:"11:00\u201312:00",hr:"135\u2013150",lift:"C",type:"b2b"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"26 mi Long (trails)",pace:"11:00\u201313:00",hr:"140\u2013155",lift:null,type:"long"}],miles:60},
-{wk:35,phase:"Ultra",of:"Nov 30",days:[{d:"Mon",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"9 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Fri",run:"8 mi B2B",pace:"11:00\u201312:00",hr:"135\u2013150",lift:"C",type:"b2b"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"30 mi Long (practice!)",pace:"11:00\u201313:00",hr:"Race sim",lift:null,type:"long"}],miles:59},
-{wk:36,phase:"Ultra",of:"Dec 7",days:[{d:"Mon",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"7 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"5 mi Easy",pace:"10:30\u201311:30",hr:"130\u2013145",lift:"C",type:"easy"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"18 mi Long",pace:"10:00\u201311:30",hr:"140\u2013150",lift:null,type:"long"}],miles:40},
-{wk:37,phase:"Ultra",of:"Dec 14",days:[{d:"Mon",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"A",type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"6 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"4 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:"B",type:"easy"},{d:"Fri",run:"4 mi Easy",pace:"10:30\u201311:30",hr:"130\u2013145",lift:null,type:"easy"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"14 mi Easy",pace:"10:00\u201311:00",hr:"140\u2013150",lift:null,type:"long"}],miles:33},
-{wk:38,phase:"Ultra",of:"Dec 21",days:[{d:"Mon",run:"4 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"5 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"easy"},{d:"Thu",run:"3 mi Easy",pace:"10:30\u201311:00",hr:"130\u2013140",lift:"C",type:"easy"},{d:"Fri",run:null,lift:null,type:"rest"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"8 mi Easy",pace:"10:00\u201310:45",hr:"135\u2013145",lift:null,type:"long"}],miles:20},
-{wk:39,phase:"Ultra",of:"Dec 28",days:[{d:"Mon",run:"3 mi Easy",pace:"10:30\u201311:00",hr:"130\u2013140",lift:null,type:"easy"},{d:"Tue",run:null,lift:null,type:"rest"},{d:"Wed",run:"3 mi Easy",pace:"10:30\u201311:00",hr:"130\u2013140",lift:null,type:"easy"},{d:"Thu",run:null,lift:null,type:"rest"},{d:"Fri",run:null,lift:null,type:"rest"},{d:"Sat",run:null,lift:null,type:"rest"},{d:"Sun",run:"50-MILE ULTRA!",pace:"11:00\u201313:00",hr:"Race day!",lift:null,type:"race"}],miles:"50+"},
+import { useState, useMemo } from "react";
+
+const PHASES = {
+  Base: { color: "#3B82F6", bg: "#1e293b", accent: "#60A5FA", label: "Base Building" },
+  Marathon: { color: "#F59E0B", bg: "#1e293b", accent: "#FBBF24", label: "Marathon Block" },
+  Recovery: { color: "#10B981", bg: "#1e293b", accent: "#34D399", label: "Recovery" },
+  Ultra: { color: "#EF4444", bg: "#1e293b", accent: "#F87171", label: "Ultra Build" },
+};
+
+const LIFT_DETAILS = {
+  Upper: {
+    name: "Upper Body",
+    exercises: [
+      { name: "Wide Pull-Ups", sets: "3×5", weight: "BW" },
+      { name: "Close Grip Pull-Ups", sets: "3×5", weight: "BW" },
+      { name: "DB Bench Flys", sets: "3×15", weight: "DB" },
+      { name: "DB Bench Press", sets: "3×15", weight: "DB" },
+      { name: "DB OH Tricep Ext (ea arm)", sets: "3×15", weight: "DB" },
+      { name: "Spider Curls (bench)", sets: "3×20", weight: "DB" },
+      { name: "SA Rows (bench support)", sets: "3×20", weight: "DB" },
+      { name: "DB Bench OH Press", sets: "3×12", weight: "DB" },
+      { name: "Standing DB Curls (both hands)", sets: "3×15", weight: "DB" },
+      { name: "Ab Roller", sets: "3×10-15", weight: "BW" },
+    ],
+  },
+  Lower: {
+    name: "Lower Body",
+    exercises: [
+      { name: "Bulgarian Split Squats (SL)", sets: "3×10", weight: "DB" },
+      { name: "DB Squats", sets: "3×20", weight: "DB" },
+      { name: "SL Romanian DL", sets: "3×10/leg", weight: "DB" },
+      { name: "SL DB Calf Raises", sets: "3×20", weight: "DB" },
+      { name: "SL Elevated Planks", sets: "3×15s/leg", weight: "BW" },
+      { name: "Decline Bench Sit-Ups", sets: "3×15", weight: "BW" },
+    ],
+  },
+};
+
+const weeks = [
+  { wk:1, phase:"Base", of:"Apr 6", days:[
+    {d:"Mon",run:"4 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"4 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"3 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"8 mi Long",pace:"10:00–12:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:24},
+  { wk:2, phase:"Base", of:"Apr 13", days:[
+    {d:"Mon",run:"4 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"4 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"3 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"9 mi Long",pace:"10:00–12:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:26},
+  { wk:3, phase:"Base", of:"Apr 20", days:[
+    {d:"Mon",run:"5 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"4 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"3 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"10 mi Long",pace:"10:00–12:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:28},
+  { wk:4, phase:"Base", of:"Apr 27", days:[
+    {d:"Mon",run:"4 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"3 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"3 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"8 mi Long",pace:"10:00–12:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:23},
+  { wk:5, phase:"Base", of:"May 4", days:[
+    {d:"Mon",run:"5 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"7 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"5 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"4 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"11 mi Long",pace:"10:00–12:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:32},
+  { wk:6, phase:"Base", of:"May 11", days:[
+    {d:"Mon",run:"5 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"7 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"5 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"4 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"12 mi Long",pace:"10:00–12:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:33},
+  { wk:7, phase:"Base", of:"May 18", days:[
+    {d:"Mon",run:"6 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"8 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"5 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"4 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"13 mi Long",pace:"10:00–12:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:36},
+  { wk:8, phase:"Base", of:"May 25", days:[
+    {d:"Mon",run:"5 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"4 mi Easy",pace:"10:00–11:30",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"3 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"10 mi Long",pace:"10:00–12:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:28},
+  { wk:9, phase:"Marathon", of:"Jun 1", days:[
+    {d:"Mon",run:"6 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"8 mi Easy",pace:"10:00–10:45",hr:"135–150",lift:null,type:"easy"},
+    {d:"Thu",run:"5 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"4 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"14 mi Long",pace:"10:00–11:30",hr:"140–155",lift:null,type:"long"}
+  ],miles:37},
+  { wk:10, phase:"Marathon", of:"Jun 8", days:[
+    {d:"Mon",run:"6 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"8 mi w/ 3 Tempo",pace:"Tempo: 8:30–9:15",hr:"160–170",lift:null,type:"tempo"},
+    {d:"Thu",run:"5 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"4 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"15 mi Long",pace:"10:00–11:30",hr:"140–155",lift:null,type:"long"}
+  ],miles:38},
+  { wk:11, phase:"Marathon", of:"Jun 15", days:[
+    {d:"Mon",run:"6 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"9 mi w/ 4 Tempo",pace:"Tempo: 8:30–9:15",hr:"160–170",lift:null,type:"tempo"},
+    {d:"Thu",run:"5 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"5 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"16 mi Long",pace:"10:00–11:30",hr:"140–155",lift:null,type:"long"}
+  ],miles:41},
+  { wk:12, phase:"Marathon", of:"Jun 22", days:[
+    {d:"Mon",run:"5 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"4 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"3 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"12 mi Long",pace:"10:00–11:30",hr:"140–155",lift:null,type:"long"}
+  ],miles:30},
+  { wk:13, phase:"Marathon", of:"Jun 29", days:[
+    {d:"Mon",run:"6 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"9 mi w/ 4 Tempo",pace:"Tempo: 8:30–9:15",hr:"160–170",lift:null,type:"tempo"},
+    {d:"Thu",run:"6 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"5 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"17 mi Long",pace:"10:00–11:30",hr:"140–155",lift:null,type:"long"}
+  ],miles:43},
+  { wk:14, phase:"Marathon", of:"Jul 6", days:[
+    {d:"Mon",run:"6 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"10 mi w/ 5 Tempo",pace:"Tempo: 8:30–9:15",hr:"160–170",lift:null,type:"tempo"},
+    {d:"Thu",run:"6 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"5 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"18 mi Long w/ 4 MGP",pace:"MGP: 9:00–9:05",hr:"155–165",lift:null,type:"long"}
+  ],miles:45},
+  { wk:15, phase:"Marathon", of:"Jul 13", days:[
+    {d:"Mon",run:"7 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"10 mi w/ 5 Tempo",pace:"Tempo: 8:30–9:15",hr:"160–170",lift:null,type:"tempo"},
+    {d:"Thu",run:"6 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"5 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"16 mi Long",pace:"10:00–11:30",hr:"140–155",lift:null,type:"long"}
+  ],miles:44},
+  { wk:16, phase:"Marathon", of:"Jul 20", days:[
+    {d:"Mon",run:"5 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"7 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"4 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"4 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"13 mi Long",pace:"10:00–11:30",hr:"140–155",lift:null,type:"long"}
+  ],miles:33},
+  { wk:17, phase:"Marathon", of:"Jul 27", days:[
+    {d:"Mon",run:"7 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"10 mi Progression",pace:"Start easy → 9:00",hr:"145–165",lift:null,type:"tempo"},
+    {d:"Thu",run:"6 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"5 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"20 mi Long w/ 6 MGP",pace:"MGP: 9:00–9:05",hr:"155–165",lift:null,type:"long"}
+  ],miles:48},
+  { wk:18, phase:"Marathon", of:"Aug 3", days:[
+    {d:"Mon",run:"7 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"10 mi w/ 5 Tempo",pace:"Tempo: 8:30–9:15",hr:"160–170",lift:null,type:"tempo"},
+    {d:"Thu",run:"6 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"5 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"18 mi Long w/ 8 MGP",pace:"MGP: 9:00–9:05",hr:"155–165",lift:null,type:"long"}
+  ],miles:46},
+  { wk:19, phase:"Marathon", of:"Aug 10", days:[
+    {d:"Mon",run:"6 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"8 mi w/ 4 Tempo",pace:"Tempo: 8:30–9:00",hr:"160–170",lift:null,type:"tempo"},
+    {d:"Thu",run:"5 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"5 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"20 mi Long w/ 10 MGP",pace:"MGP: 9:00–9:05",hr:"155–165",lift:null,type:"long"}
+  ],miles:44},
+  { wk:20, phase:"Marathon", of:"Aug 17", days:[
+    {d:"Mon",run:"5 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"4 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"4 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"12 mi Long",pace:"10:00–11:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:31},
+  { wk:21, phase:"Marathon", of:"Aug 24", days:[
+    {d:"Mon",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"7 mi w/ 3 Tempo",pace:"Tempo: 8:30–9:00",hr:"160–170",lift:null,type:"tempo"},
+    {d:"Thu",run:"4 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"3 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"10 mi w/ 4 MGP",pace:"MGP: 9:00–9:05",hr:"155–165",lift:null,type:"long"}
+  ],miles:29},
+  { wk:22, phase:"Marathon", of:"Aug 31", days:[
+    {d:"Mon",run:"4 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"5 mi w/ 2 MGP",pace:"MGP: 9:00–9:05",hr:"155–165",lift:null,type:"tempo"},
+    {d:"Thu",run:"3 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:null,lift:null,type:"rest"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"MARATHON RACE DAY",pace:"9:05/mi goal",hr:"Race effort",lift:null,type:"race"}
+  ],miles:"26.2 + 12"},
+  { wk:23, phase:"Recovery", of:"Sep 7", days:[
+    {d:"Mon",run:null,lift:"Lower",type:"rest"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"3 mi Easy",pace:"Whatever feels good",hr:"< 145",lift:null,type:"recovery"},
+    {d:"Thu",run:null,lift:"Lower",type:"rest"},
+    {d:"Fri",run:null,lift:null,type:"rest"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"3 mi Easy",pace:"Whatever feels good",hr:"< 145",lift:null,type:"recovery"}
+  ],miles:6},
+  { wk:24, phase:"Recovery", of:"Sep 14", days:[
+    {d:"Mon",run:"3 mi Easy",pace:"10:30–11:30",hr:"130–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"4 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"3 mi Easy",pace:"10:30–11:30",hr:"130–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"3 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"5 mi Easy",pace:"10:00–11:00",hr:"135–150",lift:null,type:"long"}
+  ],miles:18},
+  { wk:25, phase:"Recovery", of:"Sep 21", days:[
+    {d:"Mon",run:"4 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"4 mi Easy",pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"3 mi Recovery",pace:"10:30–11:30",hr:"130–140",lift:null,type:"recovery"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"7 mi Easy",pace:"10:00–11:00",hr:"135–150",lift:null,type:"long"}
+  ],miles:23},
+  { wk:26, phase:"Ultra", of:"Sep 28", days:[
+    {d:"Mon",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"7 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"5 mi Easy",pace:"10:30–11:30",hr:"130–145",lift:null,type:"easy"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"12 mi Long (trails)",pace:"10:30–12:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:34},
+  { wk:27, phase:"Ultra", of:"Oct 5", days:[
+    {d:"Mon",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"8 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"6 mi Easy",pace:"10:30–11:30",hr:"130–145",lift:null,type:"easy"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"14 mi Long (trails)",pace:"10:30–12:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:38},
+  { wk:28, phase:"Ultra", of:"Oct 12", days:[
+    {d:"Mon",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"8 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"7 mi B2B",pace:"10:30–11:30",hr:"135–150",lift:null,type:"b2b"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"16 mi Long (trails)",pace:"10:30–12:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:42},
+  { wk:29, phase:"Ultra", of:"Oct 19", days:[
+    {d:"Mon",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"4 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"4 mi Easy",pace:"10:30–11:30",hr:"130–145",lift:null,type:"easy"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"12 mi Long",pace:"10:00–11:30",hr:"140–155",lift:null,type:"long"}
+  ],miles:31},
+  { wk:30, phase:"Ultra", of:"Oct 26", days:[
+    {d:"Mon",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"9 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"8 mi B2B",pace:"10:30–11:30",hr:"135–150",lift:null,type:"b2b"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"18 mi Long (trails)",pace:"10:30–12:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:47},
+  { wk:31, phase:"Ultra", of:"Nov 2", days:[
+    {d:"Mon",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"9 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"10 mi B2B",pace:"10:30–12:00",hr:"135–150",lift:null,type:"b2b"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"20 mi Long (trails)",pace:"10:30–12:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:51},
+  { wk:32, phase:"Ultra", of:"Nov 9", days:[
+    {d:"Mon",run:"7 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"10 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"10 mi B2B",pace:"10:30–12:00",hr:"135–150",lift:null,type:"b2b"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"22 mi Long (trails)",pace:"10:30–12:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:55},
+  { wk:33, phase:"Ultra", of:"Nov 16", days:[
+    {d:"Mon",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"7 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"4 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"5 mi Easy",pace:"10:30–11:30",hr:"130–145",lift:null,type:"easy"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"14 mi Long",pace:"10:00–11:30",hr:"140–155",lift:null,type:"long"}
+  ],miles:35},
+  { wk:34, phase:"Ultra", of:"Nov 23", days:[
+    {d:"Mon",run:"7 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"10 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"7 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"10 mi B2B",pace:"11:00–12:00",hr:"135–150",lift:null,type:"b2b"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"26 mi Long (trails)",pace:"11:00–13:00",hr:"140–155",lift:null,type:"long"}
+  ],miles:60},
+  { wk:35, phase:"Ultra", of:"Nov 30", days:[
+    {d:"Mon",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"9 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"8 mi B2B",pace:"11:00–12:00",hr:"135–150",lift:null,type:"b2b"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"30 mi Long (practice!)",pace:"11:00–13:00",hr:"Race sim",lift:null,type:"long"}
+  ],miles:59},
+  { wk:36, phase:"Ultra", of:"Dec 7", days:[
+    {d:"Mon",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"7 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"5 mi Easy",pace:"10:30–11:30",hr:"130–145",lift:null,type:"easy"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"18 mi Long",pace:"10:00–11:30",hr:"140–150",lift:null,type:"long"}
+  ],miles:40},
+  { wk:37, phase:"Ultra", of:"Dec 14", days:[
+    {d:"Mon",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"6 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"4 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"4 mi Easy",pace:"10:30–11:30",hr:"130–145",lift:null,type:"easy"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"14 mi Easy",pace:"10:00–11:00",hr:"140–150",lift:null,type:"long"}
+  ],miles:33},
+  { wk:38, phase:"Ultra", of:"Dec 21", days:[
+    {d:"Mon",run:"4 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"5 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"easy"},
+    {d:"Thu",run:"3 mi Easy",pace:"10:30–11:00",hr:"130–140",lift:"Lower",type:"easy"},
+    {d:"Fri",run:"3 mi Easy",pace:"10:30–11:30",hr:"130–140",lift:null,type:"easy"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"8 mi Easy",pace:"10:00–10:45",hr:"135–145",lift:null,type:"long"}
+  ],miles:23},
+  { wk:39, phase:"Ultra", of:"Dec 28", days:[
+    {d:"Mon",run:"3 mi Easy",pace:"10:30–11:00",hr:"130–140",lift:"Lower",type:"easy"},
+    {d:"Tue",run:null,lift:"Upper",type:"rest"},
+    {d:"Wed",run:"3 mi Easy",pace:"10:30–11:00",hr:"130–140",lift:null,type:"easy"},
+    {d:"Thu",run:null,lift:"Lower",type:"rest"},
+    {d:"Fri",run:null,lift:null,type:"rest"},
+    {d:"Sat",run:null,lift:"Upper",type:"rest"},
+    {d:"Sun",run:"50-MILE ULTRA!",pace:"11:00–13:00",hr:"Race day!",lift:null,type:"race"}
+  ],miles:"50+"},
 ];
 
-var TS={rest:{bg:"rgba(100,116,139,0.08)",border:"#475569",icon:"\u{1F634}"},easy:{bg:"rgba(59,130,246,0.08)",border:"#3B82F6",icon:"\u{1F3C3}"},long:{bg:"rgba(16,185,129,0.08)",border:"#10B981",icon:"\u{1F3D4}\uFE0F"},tempo:{bg:"rgba(245,158,11,0.08)",border:"#F59E0B",icon:"\u26A1"},recovery:{bg:"rgba(139,92,246,0.08)",border:"#8B5CF6",icon:"\u{1F9D8}"},race:{bg:"rgba(239,68,68,0.1)",border:"#EF4444",icon:"\u{1F3C1}"},b2b:{bg:"rgba(236,72,153,0.08)",border:"#EC4899",icon:"\u{1F504}"}};
+const TYPE_STYLES = {
+  rest: { bg: "rgba(100,116,139,0.08)", border: "#475569", icon: "😴", label: "Rest" },
+  easy: { bg: "rgba(59,130,246,0.08)", border: "#3B82F6", icon: "🏃", label: "Easy" },
+  long: { bg: "rgba(16,185,129,0.08)", border: "#10B981", icon: "🏔️", label: "Long" },
+  tempo: { bg: "rgba(245,158,11,0.08)", border: "#F59E0B", icon: "⚡", label: "Tempo" },
+  recovery: { bg: "rgba(139,92,246,0.08)", border: "#8B5CF6", icon: "🧘", label: "Recovery" },
+  race: { bg: "rgba(239,68,68,0.1)", border: "#EF4444", icon: "🏁", label: "Race" },
+  b2b: { bg: "rgba(236,72,153,0.08)", border: "#EC4899", icon: "🔄", label: "B2B" },
+};
 
-function LB(p){return e("button",{onClick:function(ev){ev.stopPropagation();p.onClick(p.letter)},style:{display:"inline-flex",alignItems:"center",gap:4,background:"rgba(139,92,246,0.15)",border:"1px solid rgba(139,92,246,0.3)",borderRadius:6,padding:"2px 8px",fontSize:11,fontWeight:700,color:"#A78BFA",cursor:"pointer",marginTop:4,fontFamily:"inherit",transition:"all 0.15s"},onMouseEnter:function(ev){ev.target.style.background="rgba(139,92,246,0.3)"},onMouseLeave:function(ev){ev.target.style.background="rgba(139,92,246,0.15)"}},"\u{1F3CB}\uFE0F Lift "+p.letter)}
+const LiftBadge = ({ letter, onClick }) => (
+  <button
+    onClick={(e) => { e.stopPropagation(); onClick(letter); }}
+    style={{
+      display: "inline-flex", alignItems: "center", gap: 4,
+      background: "rgba(139,92,246,0.15)", border: "1px solid rgba(139,92,246,0.3)",
+      borderRadius: 6, padding: "2px 8px", fontSize: 11, fontWeight: 700,
+      color: "#A78BFA", cursor: "pointer", marginTop: 4, fontFamily: "inherit",
+      transition: "all 0.15s",
+    }}
+    onMouseEnter={e => { e.target.style.background = "rgba(139,92,246,0.3)"; }}
+    onMouseLeave={e => { e.target.style.background = "rgba(139,92,246,0.15)"; }}
+  >
+    🏋️ {letter}
+  </button>
+);
 
-function DC(p){var day=p.day,st=TS[day.type]||TS.rest,ir=day.type==="rest"&&!day.lift;return e("div",{style:{background:st.bg,borderLeft:"3px solid "+st.border,borderRadius:8,padding:"10px 12px",minHeight:ir?60:80,display:"flex",flexDirection:"column",gap:3,opacity:ir?0.5:1}},e("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center"}},e("span",{style:{fontSize:12,fontWeight:800,color:"#94a3b8",letterSpacing:1,textTransform:"uppercase"}},day.d),e("span",{style:{fontSize:14}},st.icon)),day.run?e(React.Fragment,null,e("div",{style:{fontSize:14,fontWeight:700,color:"#e2e8f0",lineHeight:1.3}},day.run),day.pace&&e("div",{style:{fontSize:11,color:"#94a3b8"}},"Pace: "+day.pace),day.hr&&e("div",{style:{fontSize:11,color:"#f87171"}},"HR: "+day.hr+" bpm")):e("div",{style:{fontSize:13,color:"#64748b",fontStyle:"italic",marginTop:4}},day.lift?"Lift only":"Full rest"),day.lift&&e(LB,{letter:day.lift,onClick:p.onLiftClick}))}
+const DayCard = ({ day, onLiftClick }) => {
+  const st = TYPE_STYLES[day.type] || TYPE_STYLES.rest;
+  const isRest = day.type === "rest" && !day.lift;
 
-function LM(p){var l=LIFT_DETAILS[p.letter];if(!l)return null;return e("div",{onClick:p.onClose,style:{position:"fixed",inset:0,background:"rgba(0,0,0,0.7)",zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center",padding:16,backdropFilter:"blur(4px)"}},e("div",{onClick:function(ev){ev.stopPropagation()},style:{background:"#1e293b",borderRadius:16,padding:24,maxWidth:480,width:"100%",border:"1px solid rgba(139,92,246,0.3)",boxShadow:"0 24px 48px rgba(0,0,0,0.4)"}},e("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}},e("div",null,e("div",{style:{fontSize:11,fontWeight:700,color:"#A78BFA",letterSpacing:1,textTransform:"uppercase"}},"Lift "+p.letter),e("div",{style:{fontSize:20,fontWeight:800,color:"#e2e8f0"}},l.name)),e("button",{onClick:p.onClose,style:{background:"rgba(255,255,255,0.1)",border:"none",borderRadius:8,width:32,height:32,color:"#94a3b8",fontSize:18,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"inherit"}},"\u00D7")),e("div",{style:{display:"flex",flexDirection:"column",gap:6}},l.exercises.map(function(ex,i){return e("div",{key:i,style:{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 12px",borderRadius:8,background:i%2===0?"rgba(139,92,246,0.06)":"transparent"}},e("div",null,e("div",{style:{fontSize:14,fontWeight:600,color:"#e2e8f0"}},ex.name),e("div",{style:{fontSize:12,color:"#A78BFA"}},ex.weight)),e("div",{style:{fontSize:13,fontWeight:700,color:"#c4b5fd",background:"rgba(139,92,246,0.15)",padding:"4px 10px",borderRadius:6,whiteSpace:"nowrap"}},ex.sets))}))))}
+  return (
+    <div style={{
+      background: st.bg, borderLeft: `3px solid ${st.border}`,
+      borderRadius: 8, padding: "10px 12px", minHeight: isRest ? 60 : 80,
+      display: "flex", flexDirection: "column", gap: 3,
+      opacity: isRest ? 0.5 : 1,
+    }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <span style={{ fontSize: 12, fontWeight: 800, color: "#94a3b8", letterSpacing: 1, textTransform: "uppercase" }}>{day.d}</span>
+        <span style={{ fontSize: 14 }}>{st.icon}</span>
+      </div>
+      {day.run ? (
+        <>
+          <div style={{ fontSize: 14, fontWeight: 700, color: "#e2e8f0", lineHeight: 1.3 }}>{day.run}</div>
+          {day.pace && <div style={{ fontSize: 11, color: "#94a3b8" }}>Pace: {day.pace}</div>}
+          {day.hr && <div style={{ fontSize: 11, color: "#f87171" }}>HR: {day.hr} bpm</div>}
+        </>
+      ) : (
+        <div style={{ fontSize: 13, color: "#64748b", fontStyle: "italic", marginTop: 4 }}>
+          {day.lift ? "Lift only" : "Full rest"}
+        </div>
+      )}
+      {day.lift && <LiftBadge letter={day.lift} onClick={onLiftClick} />}
+    </div>
+  );
+};
 
-function App(){var _c=useState(0),cw=_c[0],sc=_c[1],_s=useState("All"),sp=_s[0],ss=_s[1],_l=useState(null),lm=_l[0],sl=_l[1];
-var f=useMemo(function(){return sp==="All"?weeks:weeks.filter(function(w){return w.phase===sp})},[sp]);
-var w=f[cw]||f[0],ph=PHASES[w.phase];
-var pc=useMemo(function(){var c={Base:0,Marathon:0,Recovery:0,Ultra:0};weeks.forEach(function(w){c[w.phase]++});return c},[]);
-var zn=[{label:"Easy",pace:"10:00\u201310:45",color:"#3B82F6",note:"Summer: 10:30\u201311:30"},{label:"Long Run",pace:"10:00\u201311:00",color:"#10B981",note:"Summer: 10:30\u201312:00"},{label:"Tempo",pace:"8:30\u20138:50",color:"#F59E0B",note:"Summer: 8:50\u20139:15"},{label:"MGP",pace:"9:00\u20139:05",color:"#EF4444",note:"Sub-4:00 target"},{label:"Ultra",pace:"11:00\u201313:00",color:"#EC4899",note:"Walk hills freely"}];
-return e("div",{style:{fontFamily:"'DM Sans','SF Pro Display',-apple-system,sans-serif",background:"#0f172a",color:"#e2e8f0",minHeight:"100vh",padding:"20px 16px"}},
-e("div",{style:{maxWidth:900,margin:"0 auto 20px"}},e("div",{style:{fontSize:11,fontWeight:700,color:"#64748b",letterSpacing:2,textTransform:"uppercase",marginBottom:4}},"Training Plan"),e("h1",{style:{fontSize:28,fontWeight:900,lineHeight:1.1,margin:0}},"Marathon \u2192 ",e("span",{style:{color:"#EF4444"}},"50-Mile Ultra")),e("div",{style:{fontSize:13,color:"#64748b",marginTop:6}},"Apr 2026 \u2013 Dec 2026 \u00B7 39 weeks \u00B7 Rest: Tue & Sat \u00B7 Long run: Sunday")),
-e("div",{style:{maxWidth:900,margin:"0 auto 16px",display:"flex",gap:6,overflowX:"auto",paddingBottom:4}},["All","Base","Marathon","Recovery","Ultra"].map(function(p){var a=sp===p,col=p==="All"?"#94a3b8":PHASES[p].color;return e("button",{key:p,onClick:function(){ss(p);sc(0)},style:{padding:"8px 16px",borderRadius:10,border:a?"2px solid "+col:"2px solid transparent",background:a?col+"15":"rgba(255,255,255,0.03)",color:a?col:"#64748b",fontSize:13,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",fontFamily:"inherit",transition:"all 0.15s"}},p==="All"?"All Weeks":PHASES[p].label,e("span",{style:{fontSize:11,marginLeft:6,opacity:0.6}},p==="All"?39:pc[p]))})),
-e("div",{style:{maxWidth:900,margin:"0 auto 16px",display:"flex",alignItems:"center",gap:12,background:"rgba(255,255,255,0.03)",borderRadius:12,padding:"12px 16px"}},e("button",{onClick:function(){sc(Math.max(0,cw-1))},disabled:cw===0,style:{background:"rgba(255,255,255,0.06)",border:"none",borderRadius:8,width:36,height:36,color:cw===0?"#334155":"#e2e8f0",fontSize:18,cursor:cw===0?"default":"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"inherit"}},"\u2039"),e("div",{style:{flex:1,textAlign:"center"}},e("div",{style:{fontSize:11,fontWeight:700,color:ph.color,letterSpacing:1,textTransform:"uppercase"}},ph.label+" \u00B7 Week "+w.wk),e("div",{style:{fontSize:18,fontWeight:800}},"Week of "+w.of),e("div",{style:{fontSize:13,color:"#94a3b8",marginTop:2}},"Target: ",e("span",{style:{color:"#e2e8f0",fontWeight:700}},w.miles+" mi"))),e("button",{onClick:function(){sc(Math.min(f.length-1,cw+1))},disabled:cw===f.length-1,style:{background:"rgba(255,255,255,0.06)",border:"none",borderRadius:8,width:36,height:36,color:cw===f.length-1?"#334155":"#e2e8f0",fontSize:18,cursor:cw===f.length-1?"default":"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"inherit"}},"\u203A")),
-e("div",{style:{maxWidth:900,margin:"0 auto 20px",display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(180px, 1fr))",gap:8}},w.days.map(function(d,i){return e(DC,{key:i,day:d,onLiftClick:sl})})),
-e("div",{style:{maxWidth:900,margin:"0 auto 24px"}},e("div",{style:{fontSize:11,fontWeight:700,color:"#475569",marginBottom:8,letterSpacing:1}},"ALL WEEKS"),e("div",{style:{display:"flex",gap:3,flexWrap:"wrap"}},f.map(function(wk,i){var p=PHASES[wk.phase],a=i===cw;return e("button",{key:i,onClick:function(){sc(i)},title:"Week "+wk.wk+" - "+wk.phase+" ("+wk.of+")",style:{width:a?28:18,height:28,borderRadius:6,background:a?p.color:p.color+"20",border:a?"2px solid "+p.accent:"2px solid transparent",cursor:"pointer",transition:"all 0.15s",fontFamily:"inherit",display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:800,color:a?"#fff":"transparent"}},a?wk.wk:"")}))),
-e("div",{style:{maxWidth:900,margin:"0 auto",background:"rgba(255,255,255,0.02)",borderRadius:12,padding:16,border:"1px solid rgba(255,255,255,0.05)"}},e("div",{style:{fontSize:11,fontWeight:700,color:"#475569",letterSpacing:1,marginBottom:10,textTransform:"uppercase"}},"Your Pace Zones (adjusted for HR data)"),e("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(140px, 1fr))",gap:8}},zn.map(function(z,i){return e("div",{key:i,style:{padding:"10px 12px",borderRadius:8,background:z.color+"10",borderLeft:"3px solid "+z.color}},e("div",{style:{fontSize:11,fontWeight:700,color:z.color,textTransform:"uppercase"}},z.label),e("div",{style:{fontSize:16,fontWeight:800,color:"#e2e8f0"}},z.pace),e("div",{style:{fontSize:10,color:"#94a3b8",marginTop:2}},z.note))})),e("div",{style:{marginTop:10,padding:"8px 12px",borderRadius:8,background:"rgba(239,68,68,0.06)",fontSize:12,color:"#f87171"}},"\u26A0\uFE0F Run by heart rate in the heat, not pace. Target 135\u2013145 bpm for easy runs. If HR > 150 on an easy day, slow down or walk.")),
-lm&&e(LM,{letter:lm,onClose:function(){sl(null)}}))}
-ReactDOM.createRoot(document.getElementById("root")).render(e(App));
-</script>
-</body>
-</html>
+const LiftModal = ({ letter, onClose }) => {
+  const lift = LIFT_DETAILS[letter];
+  if (!lift) return null;
+  return (
+    <div onClick={onClose} style={{
+      position: "fixed", inset: 0, background: "rgba(0,0,0,0.7)", zIndex: 1000,
+      display: "flex", alignItems: "center", justifyContent: "center", padding: 16,
+      backdropFilter: "blur(4px)",
+    }}>
+      <div onClick={e => e.stopPropagation()} style={{
+        background: "#1e293b", borderRadius: 16, padding: 24, maxWidth: 480, width: "100%",
+        border: "1px solid rgba(139,92,246,0.3)", boxShadow: "0 24px 48px rgba(0,0,0,0.4)",
+      }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: "#A78BFA", letterSpacing: 1, textTransform: "uppercase" }}>🏋️ {letter}</div>
+            <div style={{ fontSize: 20, fontWeight: 800, color: "#e2e8f0" }}>{lift.name}</div>
+          </div>
+          <button onClick={onClose} style={{
+            background: "rgba(255,255,255,0.1)", border: "none", borderRadius: 8,
+            width: 32, height: 32, color: "#94a3b8", fontSize: 18, cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit",
+          }}>×</button>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          {lift.exercises.map((ex, i) => (
+            <div key={i} style={{
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+              padding: "10px 12px", borderRadius: 8,
+              background: i % 2 === 0 ? "rgba(139,92,246,0.06)" : "transparent",
+            }}>
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: "#e2e8f0" }}>{ex.name}</div>
+                <div style={{ fontSize: 12, color: "#A78BFA" }}>{ex.weight}</div>
+              </div>
+              <div style={{
+                fontSize: 13, fontWeight: 700, color: "#c4b5fd",
+                background: "rgba(139,92,246,0.15)", padding: "4px 10px", borderRadius: 6,
+                whiteSpace: "nowrap",
+              }}>{ex.sets}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default function TrainingPlan() {
+  const [currentWeek, setCurrentWeek] = useState(0);
+  const [selectedPhase, setSelectedPhase] = useState("All");
+  const [liftModal, setLiftModal] = useState(null);
+
+  const filtered = useMemo(() => {
+    if (selectedPhase === "All") return weeks;
+    return weeks.filter(w => w.phase === selectedPhase);
+  }, [selectedPhase]);
+
+  const week = filtered[currentWeek] || filtered[0];
+  const phase = PHASES[week.phase];
+
+  const phaseWeeks = useMemo(() => {
+    const counts = { Base: 0, Marathon: 0, Recovery: 0, Ultra: 0 };
+    weeks.forEach(w => counts[w.phase]++);
+    return counts;
+  }, []);
+
+  return (
+    <div style={{
+      fontFamily: "'DM Sans', 'SF Pro Display', -apple-system, sans-serif",
+      background: "#0f172a", color: "#e2e8f0", minHeight: "100vh", padding: "20px 16px",
+    }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        ::-webkit-scrollbar { height: 4px; } ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+      `}</style>
+
+      <div style={{ maxWidth: 900, margin: "0 auto 20px" }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#64748b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 4 }}>Training Plan</div>
+        <h1 style={{ fontSize: 28, fontWeight: 900, lineHeight: 1.1, margin: 0 }}>
+          Marathon → <span style={{ color: "#EF4444" }}>50-Mile Ultra</span>
+        </h1>
+        <div style={{ fontSize: 13, color: "#64748b", marginTop: 6 }}>Apr 2026 – Dec 2026 · 39 weeks · Long runs: Sunday · Lift-only: Tue & Sat</div>
+      </div>
+
+      <div style={{ maxWidth: 900, margin: "0 auto 16px", display: "flex", gap: 6, overflowX: "auto", paddingBottom: 4 }}>
+        {["All", "Base", "Marathon", "Recovery", "Ultra"].map(p => {
+          const active = selectedPhase === p;
+          const col = p === "All" ? "#94a3b8" : PHASES[p].color;
+          return (
+            <button key={p} onClick={() => { setSelectedPhase(p); setCurrentWeek(0); }} style={{
+              padding: "8px 16px", borderRadius: 10, border: active ? `2px solid ${col}` : "2px solid transparent",
+              background: active ? `${col}15` : "rgba(255,255,255,0.03)",
+              color: active ? col : "#64748b", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", whiteSpace: "nowrap", fontFamily: "inherit",
+              transition: "all 0.15s",
+            }}>
+              {p === "All" ? "All Weeks" : PHASES[p].label}
+              <span style={{ fontSize: 11, marginLeft: 6, opacity: 0.6 }}>
+                {p === "All" ? 39 : phaseWeeks[p]}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div style={{
+        maxWidth: 900, margin: "0 auto 16px",
+        display: "flex", alignItems: "center", gap: 12,
+        background: "rgba(255,255,255,0.03)", borderRadius: 12, padding: "12px 16px",
+      }}>
+        <button onClick={() => setCurrentWeek(Math.max(0, currentWeek - 1))}
+          disabled={currentWeek === 0}
+          style={{
+            background: "rgba(255,255,255,0.06)", border: "none", borderRadius: 8,
+            width: 36, height: 36, color: currentWeek === 0 ? "#334155" : "#e2e8f0",
+            fontSize: 18, cursor: currentWeek === 0 ? "default" : "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit",
+          }}>‹</button>
+
+        <div style={{ flex: 1, textAlign: "center" }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: phase.color, letterSpacing: 1, textTransform: "uppercase" }}>
+            {phase.label} · Week {week.wk}
+          </div>
+          <div style={{ fontSize: 18, fontWeight: 800 }}>Week of {week.of}</div>
+          <div style={{ fontSize: 13, color: "#94a3b8", marginTop: 2 }}>
+            Target: <span style={{ color: "#e2e8f0", fontWeight: 700 }}>{week.miles} mi</span>
+          </div>
+        </div>
+
+        <button onClick={() => setCurrentWeek(Math.min(filtered.length - 1, currentWeek + 1))}
+          disabled={currentWeek === filtered.length - 1}
+          style={{
+            background: "rgba(255,255,255,0.06)", border: "none", borderRadius: 8,
+            width: 36, height: 36, color: currentWeek === filtered.length - 1 ? "#334155" : "#e2e8f0",
+            fontSize: 18, cursor: currentWeek === filtered.length - 1 ? "default" : "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit",
+          }}>›</button>
+      </div>
+
+      <div style={{
+        maxWidth: 900, margin: "0 auto 20px",
+        display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: 8,
+      }}>
+        {week.days.map((day, i) => (
+          <DayCard key={i} day={day} onLiftClick={setLiftModal} />
+        ))}
+      </div>
+
+      <div style={{ maxWidth: 900, margin: "0 auto 24px" }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#475569", marginBottom: 8, letterSpacing: 1 }}>ALL WEEKS</div>
+        <div style={{ display: "flex", gap: 3, flexWrap: "wrap" }}>
+          {filtered.map((w, i) => {
+            const p = PHASES[w.phase];
+            const active = i === currentWeek;
+            return (
+              <button key={i} onClick={() => setCurrentWeek(i)} style={{
+                width: active ? 28 : 18, height: 28, borderRadius: 6,
+                background: active ? p.color : `${p.color}20`,
+                border: active ? `2px solid ${p.accent}` : "2px solid transparent",
+                cursor: "pointer",
+                transition: "all 0.15s", fontFamily: "inherit",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 9, fontWeight: 800, color: active ? "#fff" : "transparent",
+              }}
+              title={`Week ${w.wk} - ${w.phase} (${w.of})`}
+              >
+                {active ? w.wk : ""}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div style={{
+        maxWidth: 900, margin: "0 auto",
+        background: "rgba(255,255,255,0.02)", borderRadius: 12, padding: 16,
+        border: "1px solid rgba(255,255,255,0.05)",
+      }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#475569", letterSpacing: 1, marginBottom: 10, textTransform: "uppercase" }}>Your Pace Zones (adjusted for HR data)</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 8 }}>
+          {[
+            { label: "Easy", pace: "10:00–10:45", color: "#3B82F6", note: "Summer: 10:30–11:30" },
+            { label: "Long Run", pace: "10:00–11:00", color: "#10B981", note: "Summer: 10:30–12:00" },
+            { label: "Tempo", pace: "8:30–8:50", color: "#F59E0B", note: "Summer: 8:50–9:15" },
+            { label: "MGP", pace: "9:00–9:05", color: "#EF4444", note: "Sub-4:00 target" },
+            { label: "Ultra", pace: "11:00–13:00", color: "#EC4899", note: "Walk hills freely" },
+          ].map((z, i) => (
+            <div key={i} style={{
+              padding: "10px 12px", borderRadius: 8,
+              background: `${z.color}10`, borderLeft: `3px solid ${z.color}`,
+            }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: z.color, textTransform: "uppercase" }}>{z.label}</div>
+              <div style={{ fontSize: 16, fontWeight: 800, color: "#e2e8f0" }}>{z.pace}</div>
+              <div style={{ fontSize: 10, color: "#94a3b8", marginTop: 2 }}>{z.note}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: 10, padding: "8px 12px", borderRadius: 8, background: "rgba(239,68,68,0.06)", fontSize: 12, color: "#f87171" }}>
+          ⚠️ Run by heart rate in the heat, not pace. Target 135–145 bpm for easy runs. If HR &gt; 150 on an easy day, slow down or walk.
+        </div>
+      </div>
+
+      {liftModal && <LiftModal letter={liftModal} onClose={() => setLiftModal(null)} />}
+    </div>
+  );
+}
