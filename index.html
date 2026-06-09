@@ -252,7 +252,7 @@ const weeks = [
   {wk:10,phase:"Marathon",of:"Jun 8",miles:37,days:[
     {d:"Mon",run:"6 mi Easy",         pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"8 mi w/ 4 Tempo",   pace:"Tempo: 8:10–8:20",hr:"160–170",        type:"tempo"},
+    {d:"Wed",run:"8 mi w/ 4 Tempo",   pace:"Tempo: 8:10–8:20",hr:"160–170",        type:"tempo", structure:"2 easy → 4 tempo → 2 easy"},
     {d:"Thu",run:"5 mi Easy",         pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"4 mi Recovery",     pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                lift:"Upper",                                type:"rest"},
@@ -261,7 +261,7 @@ const weeks = [
   {wk:11,phase:"Marathon",of:"Jun 15",miles:41,days:[
     {d:"Mon",run:"6 mi Easy",         pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"9 mi w/ 5 Tempo",   pace:"Tempo: 8:10–8:20",hr:"160–170",        type:"tempo"},
+    {d:"Wed",run:"9 mi w/ 5 Tempo",   pace:"Tempo: 8:10–8:20",hr:"160–170",        type:"tempo", structure:"2 easy → 5 tempo → 2 easy"},
     {d:"Thu",run:"6 mi Easy",         pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"4 mi Recovery",     pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                lift:"Upper",                                type:"rest"},
@@ -279,7 +279,7 @@ const weeks = [
   {wk:13,phase:"Marathon",of:"Jun 29",miles:44,days:[
     {d:"Mon",run:"7 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                    lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"10 mi w/ 5 Tempo",      pace:"Tempo: 8:10–8:20",hr:"160–170",        type:"tempo"},
+    {d:"Wed",run:"10 mi w/ 5 Tempo",      pace:"Tempo: 8:10–8:20",hr:"160–170",        type:"tempo", structure:"2.5 easy → 5 tempo → 2.5 easy"},
     {d:"Thu",run:"6 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"4 mi Recovery",         pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                    lift:"Upper",                                type:"rest"},
@@ -288,7 +288,7 @@ const weeks = [
   {wk:14,phase:"Marathon",of:"Jul 6",miles:46,days:[
     {d:"Mon",run:"7 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                    lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"10 mi w/ 5 Tempo",      pace:"Tempo: 8:05–8:15",hr:"160–170",        type:"tempo"},
+    {d:"Wed",run:"10 mi w/ 5 Tempo",      pace:"Tempo: 8:05–8:15",hr:"160–170",        type:"tempo", structure:"2.5 easy → 5 tempo → 2.5 easy"},
     {d:"Thu",run:"6 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"5 mi Recovery",         pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                    lift:"Upper",                                type:"rest"},
@@ -297,7 +297,7 @@ const weeks = [
   {wk:15,phase:"Marathon",of:"Jul 13",miles:50,days:[
     {d:"Mon",run:"8 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                    lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"11 mi w/ 6 Tempo",      pace:"Tempo: 8:05–8:15",hr:"160–170",        type:"tempo"},
+    {d:"Wed",run:"11 mi w/ 6 Tempo",      pace:"Tempo: 8:05–8:15",hr:"160–170",        type:"tempo", structure:"2.5 easy → 6 tempo → 2.5 easy"},
     {d:"Thu",run:"7 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"5 mi Recovery",         pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                    lift:"Upper",                                type:"rest"},
@@ -315,7 +315,7 @@ const weeks = [
   {wk:17,phase:"Marathon",of:"Jul 27",miles:48,days:[
     {d:"Mon",run:"7 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                    lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"11 mi w/ 6 Tempo",      pace:"Tempo: 8:05–8:15",hr:"160–170",        type:"tempo"},
+    {d:"Wed",run:"11 mi w/ 6 Tempo",      pace:"Tempo: 8:05–8:15",hr:"160–170",        type:"tempo", structure:"2.5 easy → 6 tempo → 2.5 easy"},
     {d:"Thu",run:"6 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"5 mi Recovery",         pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                    lift:"Upper",                                type:"rest"},
@@ -324,7 +324,7 @@ const weeks = [
   {wk:18,phase:"Marathon",of:"Aug 3",miles:52,days:[
     {d:"Mon",run:"7 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                    lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"12 mi w/ 6 Tempo",      pace:"Tempo: 8:00–8:10",hr:"160–170",        type:"tempo"},
+    {d:"Wed",run:"12 mi w/ 6 Tempo",      pace:"Tempo: 8:00–8:10",hr:"160–170",        type:"tempo", structure:"3 easy → 6 tempo → 3 easy"},
     {d:"Thu",run:"7 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"6 mi Recovery",         pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                    lift:"Upper",                                type:"rest"},
@@ -342,7 +342,7 @@ const weeks = [
   {wk:20,phase:"Marathon",of:"Aug 17",miles:51,days:[
     {d:"Mon",run:"7 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                    lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"12 mi w/ 7 Tempo",      pace:"Tempo: 8:00–8:10",hr:"160–170",        type:"tempo"},
+    {d:"Wed",run:"12 mi w/ 7 Tempo",      pace:"Tempo: 8:00–8:10",hr:"160–170",        type:"tempo", structure:"2.5 easy → 7 tempo → 2.5 easy"},
     {d:"Thu",run:"7 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"5 mi Recovery",         pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                    lift:"Upper",                                type:"rest"},
@@ -351,7 +351,7 @@ const weeks = [
   {wk:21,phase:"Marathon",of:"Aug 24",miles:55,days:[
     {d:"Mon",run:"8 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                    lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"13 mi w/ 7 Tempo",      pace:"Tempo: 8:00–8:10",hr:"160–170",        type:"tempo"},
+    {d:"Wed",run:"13 mi w/ 7 Tempo",      pace:"Tempo: 8:00–8:10",hr:"160–170",        type:"tempo", structure:"3 easy → 7 tempo → 3 easy"},
     {d:"Thu",run:"7 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"6 mi Recovery",         pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                    lift:"Upper",                                type:"rest"},
@@ -360,7 +360,7 @@ const weeks = [
   {wk:22,phase:"Marathon",of:"Aug 31",miles:45,days:[
     {d:"Mon",run:"6 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                    lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"11 mi w/ 5 Tempo",      pace:"Tempo: 8:00–8:10",hr:"160–170",        type:"tempo"},
+    {d:"Wed",run:"11 mi w/ 5 Tempo",      pace:"Tempo: 8:00–8:10",hr:"160–170",        type:"tempo", structure:"3 easy → 5 tempo → 3 easy"},
     {d:"Thu",run:"6 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"5 mi Recovery",         pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                    lift:"Upper",                                type:"rest"},
@@ -369,7 +369,7 @@ const weeks = [
   {wk:23,phase:"Marathon",of:"Sep 7",miles:56,days:[
     {d:"Mon",run:"8 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                    lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"13 mi w/ 8 Tempo",      pace:"Tempo: 7:55–8:05",hr:"160–170",        type:"tempo"},
+    {d:"Wed",run:"13 mi w/ 8 Tempo",      pace:"Tempo: 7:55–8:05",hr:"160–170",        type:"tempo", structure:"2.5 easy → 8 tempo → 2.5 easy"},
     {d:"Thu",run:"7 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"6 mi Recovery",         pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                    lift:"Upper",                                type:"rest"},
@@ -378,7 +378,7 @@ const weeks = [
   {wk:24,phase:"Marathon",of:"Sep 14",miles:49,days:[
     {d:"Mon",run:"7 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                    lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"12 mi w/ 6 Tempo",      pace:"Tempo: 7:55–8:05",hr:"160–170",        type:"tempo"},
+    {d:"Wed",run:"12 mi w/ 6 Tempo",      pace:"Tempo: 7:55–8:05",hr:"160–170",        type:"tempo", structure:"3 easy → 6 tempo → 3 easy"},
     {d:"Thu",run:"7 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"5 mi Recovery",         pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                    lift:"Upper",                                type:"rest"},
@@ -387,7 +387,7 @@ const weeks = [
   {wk:25,phase:"Marathon",of:"Sep 21",miles:50,days:[
     {d:"Mon",run:"7 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                    lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"12 mi Progression",     pace:"Easy → 8:00",hr:"145–170",             type:"tempo"},
+    {d:"Wed",run:"12 mi Progression",     pace:"Easy → 8:00",hr:"145–170",             type:"tempo", structure:"4 easy → 4 moderate → 4 at 8:00"},
     {d:"Thu",run:"6 mi Easy",             pace:"10:00–11:00",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"5 mi Recovery",         pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                    lift:"Upper",                                type:"rest"},
@@ -396,7 +396,7 @@ const weeks = [
   {wk:26,phase:"Marathon",of:"Sep 28",miles:38,days:[
     {d:"Mon",run:"6 mi Easy",             pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                    lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"9 mi w/ 5 Tempo",       pace:"Tempo: 7:55–8:05",hr:"160–170",        type:"tempo"},
+    {d:"Wed",run:"9 mi w/ 5 Tempo",       pace:"Tempo: 7:55–8:05",hr:"160–170",        type:"tempo", structure:"2 easy → 5 tempo → 2 easy"},
     {d:"Thu",run:"5 mi Easy",             pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"4 mi Recovery",         pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                    lift:"Upper",                                type:"rest"},
@@ -405,7 +405,7 @@ const weeks = [
   {wk:27,phase:"Marathon",of:"Oct 5",miles:29,days:[
     {d:"Mon",run:"5 mi Easy",             pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Tue",run:null,                    lift:"Upper",                                type:"rest"},
-    {d:"Wed",run:"7 mi w/ 3 Tempo",       pace:"Tempo: 7:55–8:05",hr:"160–170",        type:"tempo"},
+    {d:"Wed",run:"7 mi w/ 3 Tempo",       pace:"Tempo: 7:55–8:05",hr:"160–170",        type:"tempo", structure:"2 easy → 3 tempo → 2 easy"},
     {d:"Thu",run:"4 mi Easy",             pace:"10:00–10:45",hr:"135–145",lift:"Lower",type:"easy"},
     {d:"Fri",run:"3 mi Recovery",         pace:"10:30–11:30",hr:"130–140",             type:"recovery"},
     {d:"Sat",run:null,                    lift:"Upper",                                type:"rest"},
@@ -607,6 +607,7 @@ function render() {
       inner += `<div class="day-run${isMissed?" missed-text":""}">${day.run}</div>`;
       if (day.pace) inner += `<div class="day-pace">Pace: ${day.pace}</div>`;
       if (day.hr) inner += `<div class="day-hr">HR: ${day.hr} bpm</div>`;
+      if (day.structure) inner += `<div style="font-size:11px;color:#FBBF24;margin-top:3px;font-weight:600;">📐 ${day.structure}</div>`;
       if (isDone && day.actual) inner += `<div class="actual-line">→ ${day.actual}</div>`;
     } else {
       inner += `<div class="day-rest-label">${day.lift ? "Lift only" : "Full rest"}</div>`;
